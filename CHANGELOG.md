@@ -7,6 +7,8 @@ single-sourced from `src/hackingtool/constants.py` (`VERSION`).
 
 ## [Unreleased]
 
+## [3.0.0] - 2026-07-27
+
 A ground-up modernization of hackingtool from a script collection into an installable,
 data-driven, AI-guided product for authorized security testing.
 
@@ -41,6 +43,22 @@ data-driven, AI-guided product for authorized security testing.
 - Command audit logging via `platformdirs`; real exit codes and honest
   install success/failure reporting.
 
+### Removed — breaking
+
+These are why this is a major release. If you installed hackingtool the old way,
+re-install using one of the paths in the README before upgrading.
+
+- `install.sh`, `install.py` and `requirements.txt` — replaced by a standard
+  packaged install (`pipx install .` from a checkout, Docker, or a release
+  artifact). The old bootstrap scripts no longer exist.
+- `update.sh` and the in-app self-update that shelled out to `git pull` /
+  `install.py` / `/usr/share` — replaced by honest per-channel update guidance.
+- `generate_readme.py` and `README_template.md` — the generator had diverged from
+  the README and would have reintroduced `curl | bash`.
+- Flat top-level module layout — the package now lives in `src/hackingtool/`
+  and is launched via the `hackingtool` console entry point rather than
+  `python hackingtool.py`.
+
 ### Security
 - Safe-fetch installer: external downloads are pinned and **SHA-256 required**
   (`curl | bash` removed from feroxbuster, Caido, Sliver installers).
@@ -64,5 +82,6 @@ Baseline before the modernization above.
 - All `os.chdir()` bugs — tools install to `~/.hackingtool/tools/`.
 - No more `sudo git clone`; tools install to the user's home, no root needed.
 
-[Unreleased]: https://github.com/Z4nzu/hackingtool/compare/v2.0.0...HEAD
+[Unreleased]: https://github.com/Z4nzu/hackingtool/compare/v3.0.0...HEAD
+[3.0.0]: https://github.com/Z4nzu/hackingtool/compare/v2.0.0...v3.0.0
 [2.0.0]: https://github.com/Z4nzu/hackingtool/releases/tag/v2.0.0

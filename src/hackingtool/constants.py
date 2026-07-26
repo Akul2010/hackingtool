@@ -9,7 +9,7 @@ REPO_URL     = f"https://github.com/{REPO_OWNER}/{REPO_NAME}.git"
 REPO_WEB_URL = f"https://github.com/{REPO_OWNER}/{REPO_NAME}"
 
 # ── Versioning ────────────────────────────────────────────────────────────────
-VERSION         = "2.0.0"
+VERSION         = "3.0.0"
 VERSION_DISPLAY = f"v{VERSION}"
 
 # ── Python requirement ────────────────────────────────────────────────────────
