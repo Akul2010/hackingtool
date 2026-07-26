@@ -1,5 +1,7 @@
 # syntax=docker/dockerfile:1
-# Enables BuildKit features (cache mounts, faster builds)
+# Kali base: many bundled tools already present, and it's the platform this
+# audience runs. The image installs hackingtool as a proper package (console
+# entry point `hackingtool`), not the old `python3 hackingtool.py` flat script.
 FROM kalilinux/kali-rolling:latest
 
 LABEL org.opencontainers.image.title="hackingtool" \
@@ -7,28 +9,24 @@ LABEL org.opencontainers.image.title="hackingtool" \
       org.opencontainers.image.source="https://github.com/Z4nzu/hackingtool" \
       org.opencontainers.image.licenses="MIT"
 
-# Install system dependencies
-# - sudo and python3-venv are not needed (container runs as root, venv unused)
-# - --no-install-recommends keeps the layer lean
+# Runtime system deps: python + git (tools clone their own repos) + php/curl/wget
+# (a handful of tools shell out to these). --no-install-recommends keeps it lean.
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
-        git python3-pip python3-venv curl wget php && \
+        git python3 python3-pip python3-venv curl wget php && \
     rm -rf /var/lib/apt/lists/*
 
-WORKDIR /root/hackingtool
-
-# Copy requirements first so this layer is cached unless requirements change
-COPY requirements.txt ./
-
-# --mount=type=cache persists the pip cache across rebuilds (BuildKit only)
-# --break-system-packages required on Kali (PEP 668 externally-managed env)
+WORKDIR /src
+# Copy only the build inputs first so the pip layer caches unless they change.
+COPY pyproject.toml README.md ./
+COPY src ./src
+# PEP 668 (externally-managed) on Kali → --break-system-packages. This installs
+# the `hackingtool` console script onto PATH and ships catalog/*.yaml +
+# pipelines/*.yaml as package data (resolved at runtime via __file__).
 RUN --mount=type=cache,target=/root/.cache/pip \
-    pip3 install --break-system-packages -r requirements.txt
+    pip3 install --break-system-packages .
 
-# Copy the rest of the source (respects .dockerignore)
-COPY . .
-
-# Ensure the tools directory exists for installs performed at runtime
+# Tools install their payloads at runtime under here; persist via a volume.
 RUN mkdir -p /root/.hackingtool/tools
-
-ENTRYPOINT ["python3", "/root/hackingtool/hackingtool.py"]
+WORKDIR /root
+ENTRYPOINT ["hackingtool"]

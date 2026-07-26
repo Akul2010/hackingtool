@@ -183,3 +183,50 @@ pyvenv.cfg
 pip-selfcheck.json
 
 # End of https://www.toptal.com/developers/gitignore/api/python,venv
+
+# M1 tool-audit artifacts
+scripts/.audit_cache.json
+scripts/.github_token
+scripts/tool_audit_report.md
+scripts/tool_audit.json
+
+# M3 discovery-leg artifacts (generated drafts — the script is tracked, its output isn't)
+scripts/.discover_cache.json
+scripts/discovered_tools.md
+scripts/discovered_candidates.yaml
+
+# hackingtool's own source scripts — override the generic [Ss]cripts venv rule above
+!scripts/
+!scripts/audit_tools.py
+!scripts/apply_archive.py
+!scripts/discover_tools.py
+
+# Local working handoff doc (internal strategy — not for public repo)
+HANDOFF.md
+
+# AI-assistant meta/config — never commit. Only hackingtool product files get pushed.
+CLAUDE.md
+AGENTS.md
+AGENT.md
+agent.md
+GEMINI.md
+.cursorrules
+.cursor/
+.aider*
+.claude/
+.claude.json
+.mcp.json
+.windsurfrules
+.roo/
+.continue/
+.github/copilot-instructions.md
+.github/instructions/
+# plans / scratch AI notes if any ever land in-repo (canonical copies live in ~/.claude)
+*.plan.md
+PLAN.md
+docs/superpowers/
+
+uv.lock
+
+# macOS Finder metadata
+.DS_Store
