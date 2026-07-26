@@ -439,7 +439,6 @@ only ever summarize findings that exist.
 | [Operator playbook](src/hackingtool/skill/OPERATOR.md) | the charter and grounding rules the AI layer runs under (also `/skill`) |
 | [SECURITY.md](SECURITY.md) | disclosure policy, release verification, threat model |
 | [CONTRIBUTING.md](CONTRIBUTING.md) | catalog-first tool additions, the gate your PR must pass |
-| [CHANGELOG.md](CHANGELOG.md) | what changed, per release |
 
 ---
 
@@ -462,7 +461,7 @@ Before opening a PR, run **`make check`** (lint + tests + catalog validation) an
 the title format `[New Tool] Name — Category`. The full guide — security rules and the
 one-entry catalog walkthrough — is in **[CONTRIBUTING.md](CONTRIBUTING.md)**.
 
-<sub>📄 [Contributing](CONTRIBUTING.md) · [Security](SECURITY.md) · [Changelog](CHANGELOG.md) · [Code of Conduct](CODE_OF_CONDUCT.md)</sub>
+<sub>📄 [Contributing](CONTRIBUTING.md) · [Security](SECURITY.md) · [Code of Conduct](CODE_OF_CONDUCT.md)</sub>
 
 ---
 
